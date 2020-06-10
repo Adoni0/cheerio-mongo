@@ -1,9 +1,10 @@
 var cheerio = require("cheerio");
 var axios = require("axios");
 var db = require("./models");
+var app = express();
 
 var scrape = function () {
-  // app.get("/scrape", function (req, res) {
+  app.get("/scrape", function (req, res) {
   return axios.get("https://www.theonion.com/").then(function (response) {
     var $ = cheerio.load(response.data);
 
@@ -11,24 +12,26 @@ var scrape = function () {
     $("div.sc-1pw4fyi-2").each(function (i, element) {
       var result = {};
 
-      var title = $(this).find("h4").text().trim();
+      result.title = $(this).find("h4").text().trim();
       //   console.log(title);
-      var link = $(this).find("a").attr("href");
+      result.link = $(this).find("a").attr("href");
       //   console.log(link);
-      var summary = $(this).find("p").text().trim();
+      result.summary = $(this).find("p").text().trim();
       //   console.log(summary);
 
-      // db.Article.create(result)
-      // .then(function(dbarticle){
-      //     console.log(dbarticle);
-      // }).catch(function(error){
-      //     console.log(error);
-      // })
+      console.log(result);
 
-      // res.send('Scrape Complete');
+      db.Article.create(result)
+      .then(function(dbarticle){
+          console.log(dbarticle);
+      }).catch(function(error){
+          console.log(error);
+      })
+
+      res.send('Scrape Complete');
     });
   });
-  //   });
+    });
 };
 
 scrape();

@@ -36,14 +36,6 @@ mongoose.connect("mongodb://localhost/unit18Populater", {
 });
 
 
-
-app.get("/articles", function (req, res) {});
-
-//grab specific article by id and and populate with comments
-app.get("/articles/:id", function (req, res) {});
-
-app.post("/articles/:id", function (req, res) {});
-
 app.listen(PORT, function () {
   console.log("App running on port " + PORT + "!");
 });
