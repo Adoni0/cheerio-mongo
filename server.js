@@ -11,6 +11,15 @@ var PORT = 3000;
 
 var app = express();
 
+// Handlebars
+app.engine(
+  "handlebars",
+  exphbs({
+    defaultLayout: "main",
+  })
+);
+app.set("view engine", "handlebars");
+
 app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
