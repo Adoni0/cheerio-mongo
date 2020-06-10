@@ -4,7 +4,9 @@ var mongoose = require("mongoose");
 
 var axios = require("axios");
 var cheerio = require("cheerio");
-
+var exphbs = require("express-handlebars");
+var viewRoutes = require("./routes/view/viewRoutes.js");
+var apiRoutes = require("./routes/api/apiRoutes.js");
 var db = require("./models");
 
 var PORT = 3000;
@@ -26,29 +28,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
+app.use(viewRoutes);
+app.use(apiRoutes);
+
 mongoose.connect("mongodb://localhost/unit18Populater", {
   useNewUrlParser: true,
 });
 
-app.get("/scrape", function (req, res) {
-  axios.get("https://www.theonion.com/").then(function (response) {
-    var $ = cheerio.load(response.data);
 
-    //title class = 'sc-1qoge05-0'
-    //summary class = 'sc-1d3a351-0'
-    //
-
-    $("article").each(function (i, element) {
-      var result = {};
-
-      result.title = $(this).children("h4").class("sc-1qoge05-0");
-      //$('h4.sc-1qoge05-0')
-      result.summary = $(this).children("p").class("sc-1d3a351-0");
-      //$('p.sc-1d3a351-0')
-      result.link = $(this).children("a").attr("href");
-    });
-  });
-});
 
 app.get("/articles", function (req, res) {});
 
