@@ -13,6 +13,22 @@ router.get("/articles/:id", async function (req, res) {
   res.json(found);
 });
 
-router.post("/articles/:id", function (req, res) {});
+router.post("/articles/:id", function (req, res) {
+  db.Comments.create(req.body)
+  .then(function(dbcomment){
+    return db.Article.findOneAndUpdate({ _id: req.params.id }, { comments: dbcomment._id }, { new: true });
+  })
+  .then(function(dbarticle){
+    res.json(dbArticle);
+  }).catch(function(err) {
+    // If an error occurred, send it to the client
+    res.json(err);
+  });
+});
+
+router.post("/articles/:id", async function (req, res) {
+  let update = await db.Comments.remove({ _id: req.params.id });
+  res.json(update);
+});
 
 module.exports = router;
