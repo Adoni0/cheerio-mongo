@@ -1,5 +1,5 @@
 var router = require("express").Router();
-var db = require("./models");
+var db = require("../../models");
 
 //grabs all articles from database
 router.get("/articles", async function (req, res) {
@@ -26,7 +26,7 @@ router.post("/articles/:id", function (req, res) {
   });
 });
 
-router.post("/articles/:id", async function (req, res) {
+router.put("/articles/delete/:id", async function (req, res) {
   let update = await db.Comments.remove({ _id: req.params.id });
   res.json(update);
 });

@@ -3,14 +3,14 @@ $.getJSON("/articles", function (data) {
   for (var i = 0; i < data.length; i++) {
     $("#articles").append(
       "<p data-id='" +
-        data[i]._id +
-        "'>" +
-        data[i].title +
-        "<br />" +
-        data[i].link +
-        "<br />" +
-        data[i].summary +
-        "</p>"
+      data[i]._id +
+      "'>" +
+      data[i].title +
+      "<br />" +
+      data[i].link +
+      "<br />" +
+      data[i].summary +
+      "</p>"
     );
   }
 });
@@ -38,8 +38,8 @@ $(document).on("click", "p", function () {
   });
 });
 
-$(document).on("click", "#savecomment", function() {
-  
+$(document).on("click", "#savecomment", function () {
+
   var thisId = $(this).attr("data-id");
 
   $.ajax({
@@ -50,12 +50,28 @@ $(document).on("click", "#savecomment", function() {
       body: $("#bodyinput").val()
     }
   })
-    .then(function(data) {
-    
+    .then(function (data) {
+
       console.log(data);
+      $("#comments").append(
+        "<button data-id='" + data._id + "' id='removecomment'>Delete Comment</button>")
       // $("#comments").empty();
     });
 
   $("#titleinput").val("");
   $("#bodyinput").val("");
 });
+
+$(document).om('click', '#removecomment', function () {
+
+  var thisId = $(this).attr("data-id");
+
+  $.ajax({
+    method: 'PUT',
+    url: '/articles/delete/' + thisId,
+  })
+    .then(function (data) {
+
+      console.log(data)
+    })
+})
