@@ -1,6 +1,7 @@
 // Grab the articles as a json
 $.getJSON("/articles", function (data) {
   for (var i = 0; i < data.length; i++) {
+    console.log(data);
     $("#articles").append(
       "<p data-id='" +
       data[i]._id +
@@ -62,7 +63,7 @@ $(document).on("click", "#savecomment", function () {
   $("#bodyinput").val("");
 });
 
-$(document).om('click', '#removecomment', function () {
+$(document).on('click', '#removecomment', function () {
 
   var thisId = $(this).attr("data-id");
 
