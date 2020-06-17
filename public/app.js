@@ -1,4 +1,4 @@
-// Grab the articles as a json
+//Grab the articles as a json
 $.getJSON("/articles", function (data) {
   for (var i = 0; i < data.length; i++) {
     console.log(data);
@@ -18,6 +18,8 @@ $.getJSON("/articles", function (data) {
 
 $(document).on("click", "p", function () {
   var thisId = $(this).attr("data-id");
+
+  $('#comments').empty();
 
   $.ajax({
     method: "GET",
@@ -68,7 +70,7 @@ $(document).on('click', '#removecomment', function () {
   var thisId = $(this).attr("data-id");
 
   $.ajax({
-    method: 'PUT',
+    method: 'DELETE',
     url: '/articles/delete/' + thisId,
   })
     .then(function (data) {

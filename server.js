@@ -5,10 +5,10 @@ var nodemon = require('nodemon');
 
 var axios = require("axios");
 var cheerio = require("cheerio");
-var exphbs = require("express-handlebars");
+// var exphbs = require("express-handlebars");
 // var webScrape = require("./scrape.js");
 // var viewRoutes = require("./routes/view/viewRoutes.js");
-var apiRoutes = require("./routes/api/apiRoutes.js");
+// var apiRoutes = require("./routes/api/apiRoutes.js");
 var db = require("./models");
 
 var PORT = 3000;
@@ -32,7 +32,7 @@ app.use(express.static("public"));
 
 // app.use(viewRoutes);
 // app.use(webScrape);
-app.use(apiRoutes);
+// app.use(apiRoutes);
 
 mongoose.connect("mongodb://localhost/onion", {
   useNewUrlParser: true,
@@ -40,7 +40,7 @@ mongoose.connect("mongodb://localhost/onion", {
 
 
 app.get("/scrape", function (req, res) {
-  return axios.get("https://www.theonion.com/").then(function (response) {
+  axios.get("https://www.theonion.com/").then(function (response) {
     var $ = cheerio.load(response.data);
 
     //   console.log(response.data);
@@ -49,12 +49,13 @@ app.get("/scrape", function (req, res) {
 
       result.title = $(this).find("h4").text().trim();
       //   console.log(title);
-      result.link = $(this).find("a").attr("href");
+      result.link = $(this).children("a").attr("href");
       //   console.log(link);
       result.summary = $(this).find("p").text().trim();
       //   console.log(summary);
 
       console.log(result);
+  
 
       db.Article.create(result)
         .then(function (dbarticle) {
@@ -70,46 +71,51 @@ app.get("/scrape", function (req, res) {
 
 
 
-// //grabs all articles from database
-// app.get("/articles", function (req, res) {
-//   db.Article.find({})
-//     .then(function (dbarticle) {
-//       res.json(dbarticle)
-//     })
-//     .catch(function (err) {
-//       res.json(err);
-//     });
-// });
 
-// //grab specific article by id and and populate with comments
-// app.get("/articles/:id", function (req, res) {
-//   db.Article.findOne({ _id: req.params.id }).populate('Comments')
-//     .then(function (data) {
-//       res.json(data);
-//     })
-//     .catch(function (err) {
-//       res.json(err);
-//     });
-// });
+//grabs all articles from database
+app.get("/articles", function (req, res) {
+  db.Article.find({})
+    .then(function (dbarticle) {
+      res.json(dbarticle)
+      // var result = JSON.stringify(dbarticle);
+      // res.render('index', { article: JSON.parse(result) });
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
 
-// app.post("/articles/:id", function (req, res) {
-//   db.Comments.create(req.body)
-//     .then(function (dbcomment) {
-//       return db.Article.findOneAndUpdate({ _id: req.params.id }, { comments: dbcomment._id }, { new: true });
-//     })
-//     .then(function (dbarticle) {
-//       res.json(dbarticle);
-//     })
-//     .catch(function (err) {
-//       // If an error occurred, send it to the client
-//       res.json(err);
-//     });
-// });
+//grab specific article by id and and populate with comments
+app.get("/articles/:id", function (req, res) {
+  db.Article.findOne({ _id: req.params.id }).populate('Comments')
+    .then(function (data) {
+      res.json(data);
+      // var result = JSON.stringify(dbarticle);
+      // res.render('index', { comment: JSON.parse(result) });
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
 
-// app.put("/articles/delete/:id", async function (req, res) {
-//   let update = await db.Comments.remove({ _id: req.params.id });
-//   res.json(update);
-// });
+app.post("/articles/:id", function (req, res) {
+  db.Comments.create(req.body)
+    .then(function (dbcomment) {
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { comments: dbcomment._id }, { new: true });
+    })
+    .then(function (dbarticle) {
+      res.json(dbarticle);
+    })
+    .catch(function (err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+app.delete("/articles/delete/:id", async function (req, res) {
+  let update = await db.Comments.remove({ _id: req.params.id });
+  res.json(alert(update + 'was deleted'));
+});
 
 
 

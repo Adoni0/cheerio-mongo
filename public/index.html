@@ -3,10 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <title>Scraping With Mongoose</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
       body {
-        background-color: lightgreen;
+        background-color: rgb(83, 123, 83);
       }
+
+      .jumbotron{
+        background: url('https://cdn.pixabay.com/photo/2016/02/01/00/56/news-1172463_1280.jpg');
+        border-radius: 5px;
+      }
+
+      h1 {
+        color: #f1f1f1;
+      }
+
+      .lead{
+        color: #f1f1f1;
+      }
+
       #wrapper {
         width: 960px;
         margin-left: auto;
@@ -18,8 +33,10 @@
         overflow: auto;
         width: 60%;
         height: 700px;
+        background-color: lightgrey;
+        border-style: outset;
       }
-      #notes {
+      #comments {
         float: right;
         width: 30%;
       }
@@ -27,7 +44,7 @@
       input {
         display: block;
         width: 100%;
-        background-color: #fcf5c7;
+        background-color: lightgrey;
       }
       input {
         height: 36px;
@@ -40,20 +57,24 @@
     </style>
   </head>
   <body>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">The Onion Peeler</h1>
+        <p class="lead">View Articles and Comment</p>
+      </div>
+    </div>
     <div id="wrapper">
-      <h1>The Onion Peeler</h1>
-      <h2><i>If you can do this...the homework should be no problem.</i></h2>
       <div id="articles"></div>
       <div id="comments"></div>
     </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script
+    <!-- <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"
     ></script>
-    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script> -->
     <script src="app.js"></script>
   </body>
 </html>

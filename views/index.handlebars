@@ -1,10 +1,17 @@
 <div id="wrapper">
-      <h1>The Onion Peeler</h1>
-      <h2><i>View Articles and Comment</i></h2>
-      <div id="articles">
-        {{!-- {{#each article}}
-        <h4>{{this.title}}</h4>
-        {{/each}} --}}
-      </div>
-      <div id="comments"></div>
+  <h1>The Onion Peeler</h1>
+  <h2><i>View Articles and Comment</i></h2>
+  <div id="articles">
+    {{#each article}}
+    <div method='GET' action='/articles'>
+      <p value='{{this._id}}'>{{this.title}}<br/>
+      {{this.link}}<br/>
+      {{this.summary}}
+      </p>
+
     </div>
+    {{/each}}
+  </div>
+  <div id="comments">
+  </div>
+</div>

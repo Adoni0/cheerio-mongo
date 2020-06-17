@@ -6,7 +6,7 @@
 
 // var scrape = function () {
 // //   app.get("/scrape", function (req, res) {
-//   return axios.get("https://www.theonion.com/").then(function (response) {
+//   axios.get("https://www.theonion.com/").then(function (response) {
 //     var $ = cheerio.load(response.data);
 
 //     //   console.log(response.data);
@@ -15,19 +15,19 @@
 
 //       result.title = $(this).find("h4").text().trim();
 //       //   console.log(title);
-//       result.link = $(this).find("a").attr("href");
+//       result.link = $(this).children("a").attr("href");
 //       //   console.log(link);
 //       result.summary = $(this).find("p").text().trim();
 //       //   console.log(summary);
 
 //       console.log(result);
 
-//     //   db.Article.create(result)
-//     //   .then(function(dbarticle){
-//     //       console.log(dbarticle);
-//     //   }).catch(function(error){
-//     //       console.log(error);
-//     //   })
+//       db.Article.create(result)
+//       .then(function(dbarticle){
+//           console.log('dbArticle: ' + dbarticle);
+//       }).catch(function(error){
+//           console.log(error);
+//       })
 
 //     //   res.send('Scrape Complete');
 //     });
