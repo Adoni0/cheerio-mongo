@@ -34,9 +34,14 @@ app.use(express.static("public"));
 // app.use(webScrape);
 // app.use(apiRoutes);
 
-mongoose.connect("mongodb://localhost/onion", {
-  useNewUrlParser: true,
-});
+// mongoose.connect("mongodb://localhost/onion", {
+//   useNewUrlParser: true,
+// });
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/onion";
+
+mongoose.connect(MONGODB_URI);
+
 
 
 app.get("/scrape", function (req, res) {
